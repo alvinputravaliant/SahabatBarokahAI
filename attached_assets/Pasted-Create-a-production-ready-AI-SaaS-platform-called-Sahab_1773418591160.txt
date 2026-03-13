@@ -1,0 +1,518 @@
+Create a **production-ready AI SaaS platform** called **SahabatBarokahAI**.
+
+This platform helps **Indonesian small businesses generate Ramadan business strategies, viral menu ideas, marketing content, and profit analysis using AI.**
+
+The system must be **fully functional**, not a prototype.
+All AI tools must work **end-to-end** (UI → API → OpenAI → database → render result).
+
+The platform must look like a **modern AI startup product with a Ramadan theme**.
+
+---
+
+CORE FEATURES
+
+The application must include:
+
+• user authentication
+• AI generation tools
+• generation history
+• subscription plans
+• payment upgrade using Mayar payment link
+• admin dashboard
+• analytics dashboard
+• AI usage monitoring
+
+The application must avoid:
+
+• broken authentication
+• empty feature pages
+• missing API routes
+• database inconsistencies
+• invalid AI responses
+• missing environment variables
+• runtime crashes
+
+The final result must be a **fully working AI SaaS application**.
+
+---
+
+TECHNOLOGY STACK
+
+Framework
+Next.js (App Router)
+
+Database
+PostgreSQL
+
+ORM
+Prisma
+
+Authentication
+JWT with secure cookies
+
+Password hashing
+bcrypt
+
+AI Integration
+OpenAI API
+
+Styling
+Tailwind CSS
+
+Charts
+Recharts
+
+Markdown Rendering
+react-markdown
+
+---
+
+PROJECT STRUCTURE
+
+/app
+/login
+/register
+/dashboard
+/pricing
+/billing
+/history
+/admin
+
+/app/features
+/strategy-generator
+/viral-menu-generator
+/profit-calculator
+/marketing-content-generator
+
+/app/api
+/auth
+/ai/strategy
+/ai/menu
+/ai/profit
+/ai/marketing
+/history
+/admin
+
+/lib
+ai.ts
+auth.ts
+db.ts
+usageLimiter.ts
+analytics.ts
+
+/components
+AIResultCard.tsx
+Sidebar.tsx
+Navbar.tsx
+
+/prisma
+schema.prisma
+
+---
+
+USER AUTHENTICATION
+
+Implement full authentication.
+
+Pages required:
+
+Register
+Login
+Dashboard (protected)
+
+If a user is not authenticated → redirect to login.
+
+User model:
+
+User
+id
+name
+email
+passwordHash
+plan
+role
+createdAt
+
+Roles:
+
+user
+admin
+
+Security requirements:
+
+• bcrypt password hashing
+• protected API routes
+• authentication middleware
+• secure cookies
+
+---
+
+MAIN DASHBOARD
+
+After login users land on the dashboard.
+
+Dashboard must show:
+
+• welcome message
+• quick access cards to AI tools
+• preview of generation history
+• current subscription plan
+• upgrade button
+
+Sidebar navigation:
+
+Dashboard
+Strategy Generator
+Viral Menu Generator
+Profit Calculator
+Marketing Content Generator
+History
+Pricing
+Billing
+Logout
+
+---
+
+AI FEATURE IMPLEMENTATION
+
+Each AI tool must have:
+
+• a working UI form
+• a working API endpoint
+• OpenAI API integration
+• database storage
+• result rendering
+
+User flow:
+
+User fills form
+→ click Generate
+→ frontend calls API
+→ API calls OpenAI
+→ AI response returned
+→ result stored in database
+→ result displayed in UI
+
+---
+
+AI OUTPUT FORMAT RULES
+
+All AI responses MUST:
+
+• be written in Indonesian
+• use Markdown headings
+• use bullet points
+• be easy to read
+• never return JSON
+• never return raw paragraphs
+
+AI results must be rendered using **react-markdown**.
+
+---
+
+AI FEATURES
+
+Create four AI-powered tools.
+
+---
+
+RAMADAN STRATEGY GENERATOR
+
+Inputs:
+
+business type
+target market
+budget
+
+Output format:
+
+## Strategi Bisnis Ramadan
+
+### Gambaran Peluang
+
+Penjelasan peluang bisnis selama Ramadan.
+
+### Posisi Pasar
+
+• target pembeli
+• alasan mereka tertarik
+• potensi permintaan
+
+### 5 Ide Produk Ramadan
+
+• ide produk 1
+• ide produk 2
+• ide produk 3
+• ide produk 4
+• ide produk 5
+
+### 3 Strategi Promosi
+
+• strategi promosi 1
+• strategi promosi 2
+• strategi promosi 3
+
+### 5 Ide Konten Sosial Media
+
+• ide konten 1
+• ide konten 2
+• ide konten 3
+• ide konten 4
+• ide konten 5
+
+### Rencana Eksekusi 7 Hari
+
+Hari 1
+Hari 2
+Hari 3
+Hari 4
+Hari 5
+Hari 6
+Hari 7
+
+---
+
+VIRAL MENU GENERATOR
+
+Inputs:
+
+food type
+target customer
+price range
+
+Output:
+
+## Ide Menu Viral
+
+### Konsep Menu
+
+Penjelasan konsep menu.
+
+### 5 Ide Menu Viral
+
+Menu 1
+Menu 2
+Menu 3
+Menu 4
+Menu 5
+
+### Kenapa Menu Bisa Viral
+
+• alasan 1
+• alasan 2
+• alasan 3
+
+### Ide Presentasi Visual
+
+• ide plating
+• ide foto produk
+• ide video TikTok
+
+---
+
+PROFIT CALCULATOR AI
+
+Inputs:
+
+product name
+cost per item
+selling price
+estimated daily sales
+
+Output:
+
+## Analisis Profit Produk
+
+### Profit per Item
+
+Perhitungan keuntungan per produk.
+
+### Estimasi Pendapatan Harian
+
+Total revenue harian.
+
+### Estimasi Profit Harian
+
+Profit bersih per hari.
+
+### Estimasi Profit Ramadan (30 Hari)
+
+Total potensi keuntungan.
+
+### Tips Meningkatkan Profit
+
+• tips 1
+• tips 2
+• tips 3
+
+---
+
+MARKETING CONTENT GENERATOR
+
+Inputs:
+
+product name
+promotion type
+target audience
+
+Output:
+
+## Strategi Konten Marketing
+
+### Konsep Konten
+
+Strategi marketing.
+
+### 5 Ide Konten Viral
+
+• ide konten 1
+• ide konten 2
+• ide konten 3
+• ide konten 4
+• ide konten 5
+
+### 3 Contoh Caption
+
+Caption 1
+Caption 2
+Caption 3
+
+### Call To Action
+
+• CTA 1
+• CTA 2
+• CTA 3
+
+---
+
+GENERATION HISTORY
+
+Every AI generation must be stored in the database.
+
+History page must show:
+
+• tool used
+• input data
+• AI result
+• created date
+
+Users must be able to:
+
+• view history
+• delete history entries
+
+---
+
+SUBSCRIPTION PLANS
+
+Free Plan
+5 AI generations per day
+
+Pro Plan
+unlimited AI generations
+
+Business Plan
+priority processing
+
+Pricing:
+
+Free → Rp0
+Pro → Rp49.000/month
+Business → Rp99.000/month
+
+---
+
+MAYAR PAYMENT LINK
+
+Use payment link:
+
+https://mayar.to/alvin-the-chipmunk
+
+When user clicks Upgrade Plan → redirect to Mayar.
+
+After payment show message:
+
+"Terima kasih telah melakukan pembayaran. Akun Anda akan diverifikasi oleh admin."
+
+---
+
+ADMIN DASHBOARD
+
+Admin can:
+
+• view total users
+• view AI usage
+• view total generations
+• manually upgrade plans
+
+---
+
+ANALYTICS DASHBOARD
+
+Charts required:
+
+• daily AI usage
+• most used AI tool
+• user growth
+
+Use:
+
+bar chart
+line chart
+pie chart
+
+---
+
+RAMADAN UI DESIGN
+
+Design theme:
+
+• dark emerald green background
+• gold accent colors
+• Islamic geometric patterns
+• elegant typography
+
+Decorative elements:
+
+• crescent moon
+• stars
+• lantern illustrations
+
+Brand:
+
+SahabatBarokahAI
+
+---
+
+ERROR HANDLING
+
+Handle:
+
+• AI API failures
+• database errors
+• network errors
+
+UI must show:
+
+• loading states
+• error messages
+
+---
+
+FINAL RESULT
+
+The generated project must include:
+
+• complete Next.js application
+• Prisma schema
+• authentication system
+• AI generation tools
+• working API routes
+• formatted AI outputs
+• generation history system
+• subscription plans
+• Mayar payment link integration
+• admin dashboard
+• analytics dashboard
+
+The result must be a **fully working Ramadan-themed AI SaaS platform**.

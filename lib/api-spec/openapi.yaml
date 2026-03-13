@@ -1,22 +1,28 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: SahabatBarokahAI API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: auth
+    description: Authentication operations
+  - name: ai
+    description: AI generation operations
+  - name: history
+    description: Generation history operations
+  - name: admin
+    description: Admin operations
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +30,385 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /auth/register:
+    post:
+      operationId: registerUser
+      tags: [auth]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "201":
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Email already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/login:
+    post:
+      operationId: loginUser
+      tags: [auth]
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/logout:
+    post:
+      operationId: logoutUser
+      tags: [auth]
+      summary: Logout user
+      responses:
+        "200":
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+
+  /auth/me:
+    get:
+      operationId: getCurrentUser
+      tags: [auth]
+      summary: Get current authenticated user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /ai/strategy:
+    post:
+      operationId: generateStrategy
+      tags: [ai]
+      summary: Generate Ramadan business strategy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StrategyRequest"
+      responses:
+        "200":
+          description: Strategy generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationResult"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Usage limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /ai/menu:
+    post:
+      operationId: generateMenu
+      tags: [ai]
+      summary: Generate viral menu ideas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MenuRequest"
+      responses:
+        "200":
+          description: Menu generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationResult"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Usage limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /ai/profit:
+    post:
+      operationId: generateProfit
+      tags: [ai]
+      summary: Generate profit analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfitRequest"
+      responses:
+        "200":
+          description: Profit analysis generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationResult"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Usage limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /ai/marketing:
+    post:
+      operationId: generateMarketing
+      tags: [ai]
+      summary: Generate marketing content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MarketingRequest"
+      responses:
+        "200":
+          description: Marketing content generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerationResult"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Usage limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /history:
+    get:
+      operationId: getHistory
+      tags: [history]
+      summary: Get user generation history
+      responses:
+        "200":
+          description: List of generations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Generation"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /history/{id}:
+    delete:
+      operationId: deleteHistory
+      tags: [history]
+      summary: Delete a generation history entry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Get platform statistics
+      responses:
+        "200":
+          description: Platform statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/users:
+    get:
+      operationId: getAdminUsers
+      tags: [admin]
+      summary: Get all users (admin)
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AdminUser"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/users/{id}/plan:
+    patch:
+      operationId: updateUserPlan
+      tags: [admin]
+      summary: Update a user's subscription plan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePlanRequest"
+      responses:
+        "200":
+          description: Plan updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/analytics:
+    get:
+      operationId: getAnalytics
+      tags: [admin]
+      summary: Get analytics data
+      responses:
+        "200":
+          description: Analytics data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsData"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +419,304 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+
+    RegisterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 6
+      required:
+        - name
+        - email
+        - password
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/UserProfile"
+        token:
+          type: string
+      required:
+        - user
+        - token
+
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        plan:
+          type: string
+          enum: [free, pro, business]
+        role:
+          type: string
+          enum: [user, admin]
+        createdAt:
+          type: string
+          format: date-time
+        dailyUsage:
+          type: integer
+      required:
+        - id
+        - name
+        - email
+        - plan
+        - role
+        - createdAt
+        - dailyUsage
+
+    StrategyRequest:
+      type: object
+      properties:
+        businessType:
+          type: string
+        targetMarket:
+          type: string
+        budget:
+          type: string
+      required:
+        - businessType
+        - targetMarket
+        - budget
+
+    MenuRequest:
+      type: object
+      properties:
+        foodType:
+          type: string
+        targetCustomer:
+          type: string
+        priceRange:
+          type: string
+      required:
+        - foodType
+        - targetCustomer
+        - priceRange
+
+    ProfitRequest:
+      type: object
+      properties:
+        productName:
+          type: string
+        costPerItem:
+          type: number
+        sellingPrice:
+          type: number
+        estimatedDailySales:
+          type: number
+      required:
+        - productName
+        - costPerItem
+        - sellingPrice
+        - estimatedDailySales
+
+    MarketingRequest:
+      type: object
+      properties:
+        productName:
+          type: string
+        promotionType:
+          type: string
+        targetAudience:
+          type: string
+      required:
+        - productName
+        - promotionType
+        - targetAudience
+
+    GenerationResult:
+      type: object
+      properties:
+        id:
+          type: integer
+        tool:
+          type: string
+        input:
+          type: object
+          additionalProperties: true
+        result:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - tool
+        - input
+        - result
+        - createdAt
+
+    Generation:
+      type: object
+      properties:
+        id:
+          type: integer
+        tool:
+          type: string
+        input:
+          type: object
+          additionalProperties: true
+        result:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - tool
+        - input
+        - result
+        - createdAt
+
+    AdminStats:
+      type: object
+      properties:
+        totalUsers:
+          type: integer
+        totalGenerations:
+          type: integer
+        todayGenerations:
+          type: integer
+        freeUsers:
+          type: integer
+        proUsers:
+          type: integer
+        businessUsers:
+          type: integer
+      required:
+        - totalUsers
+        - totalGenerations
+        - todayGenerations
+        - freeUsers
+        - proUsers
+        - businessUsers
+
+    AdminUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        plan:
+          type: string
+          enum: [free, pro, business]
+        role:
+          type: string
+          enum: [user, admin]
+        createdAt:
+          type: string
+          format: date-time
+        totalGenerations:
+          type: integer
+      required:
+        - id
+        - name
+        - email
+        - plan
+        - role
+        - createdAt
+        - totalGenerations
+
+    UpdatePlanRequest:
+      type: object
+      properties:
+        plan:
+          type: string
+          enum: [free, pro, business]
+      required:
+        - plan
+
+    DailyUsagePoint:
+      type: object
+      properties:
+        date:
+          type: string
+        count:
+          type: integer
+      required:
+        - date
+        - count
+
+    ToolUsagePoint:
+      type: object
+      properties:
+        tool:
+          type: string
+        count:
+          type: integer
+      required:
+        - tool
+        - count
+
+    UserGrowthPoint:
+      type: object
+      properties:
+        date:
+          type: string
+        count:
+          type: integer
+      required:
+        - date
+        - count
+
+    AnalyticsData:
+      type: object
+      properties:
+        dailyUsage:
+          type: array
+          items:
+            $ref: "#/components/schemas/DailyUsagePoint"
+        toolUsage:
+          type: array
+          items:
+            $ref: "#/components/schemas/ToolUsagePoint"
+        userGrowth:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserGrowthPoint"
+      required:
+        - dailyUsage
+        - toolUsage
+        - userGrowth

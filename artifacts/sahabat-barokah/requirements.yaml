@@ -1,0 +1,25 @@
+packages:
+  "framer-motion": "For smooth page transitions and premium micro-interactions"
+  "recharts": "For the admin analytics dashboard charts"
+  "react-markdown": "To render the AI generated markdown content beautifully"
+  "@tailwindcss/typography": "For styling the markdown output"
+  "clsx": "Utility for conditionally joining classNames"
+  "tailwind-merge": "Utility for merging tailwind classes safely"
+  "react-hook-form": "For robust form handling"
+  "@hookform/resolvers": "For zod schema validation in forms"
+
+images:
+  - path: "artifacts/sahabat-barokah/public/images/hero-bg.png"
+    description: "Dark emerald green and gold abstract Islamic geometric pattern background, premium SaaS aesthetic, rich deep shadows, elegant"
+    aspect_ratio: "16:9"
+  - path: "artifacts/sahabat-barokah/public/images/logo.png"
+    description: "Elegant gold crescent moon and lantern minimal logo mark on transparent background, premium design"
+    aspect_ratio: "1:1"
+  - path: "artifacts/sahabat-barokah/public/images/pattern.png"
+    description: "Subtle dark seamless Islamic geometric mandala pattern, very low opacity, dark green background"
+    aspect_ratio: "1:1"
+
+notes:
+  - Assumes backend is running on the same domain or proxied via Vite config
+  - JWT is passed both as HttpOnly cookie and in response body (stored in localStorage as fallback)
+  - All /api/* routes require Bearer token if not using cookie
