@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useHistory } from "@/hooks/use-history";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Lightbulb, UtensilsCrossed, Calculator, Megaphone, ArrowRight, Zap } from "lucide-react";
+import { Lightbulb, UtensilsCrossed, Calculator, Megaphone, ArrowRight, Zap, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const TOOLS = [
